@@ -1,0 +1,26 @@
+.main {
+  padding: 2.5rem 1.5rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heading {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+/* Flexbox адаптив: по 3 в ряд, 2 в ряд или 1 на мобилках */
+.grid > * {
+  flex: 1 1 calc(33.333% - 1.5rem);
+  min-width: 280px;
+}
