@@ -10,17 +10,14 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
 
-  // Получаем список уникальных тегов для выпадающего списка
   const allTags = Array.from(
     new Set(articles.map((article) => article.tag).filter(Boolean))
   );
 
-  // Добавление новой статьи
   const handleAddArticle = (newArticle) => {
     setArticles((prev) => [newArticle, ...prev]);
   };
 
-  // Фильтрация статей
   const filteredArticles = articles.filter((article) => {
     const matchesSearch =
       article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -33,20 +30,55 @@ export function App() {
 
   return (
     <div>
+      {/* Стили для CSS Grid (Задания 1, 2 и 4) */}
+      <style>{`
+        .lab2-layout {
+          display: grid;
+          grid-template-columns: 200px 1fr 200px;
+          grid-template-areas:
+            "header header header"
+            "main sidebar ."
+            "footer footer footer";
+          gap: 16px;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 16px;
+        }
+
+        @media (max-width: 768px) {
+          .lab2-layout {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+              "header"
+              "main"
+              "sidebar"
+              "footer";
+          }
+        }
+      `}</style>
+
       <Header articlesCount={articles.length} />
 
-      <main style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto' }}>
-        <Search
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedTag={selectedTag}
-          onTagChange={setSelectedTag}
-          tags={allTags}
-        />
+      <main className="lab2-layout">
+        <div style={{ gridArea: 'main' }}>
+          {/* Задание 3: Новый контент через children */}
+          <section style={{ marginBottom: '2rem', background: '#f5f5f5', padding: '1rem', borderRadius: '8px' }}>
+            <h2>Добро пожаловать в блог!</h2>
+            <p>Используйте поиск и фильтры ниже для навигации по статьям.</p>
+          </section>
 
-        <AddArticleForm onAddArticle={handleAddArticle} />
+          <Search
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            selectedTag={selectedTag}
+            onTagChange={setSelectedTag}
+            tags={allTags}
+          />
 
-        <ArticleList articles={filteredArticles} />
+          <AddArticleForm onAddArticle={handleAddArticle} />
+
+          <ArticleList articles={filteredArticles} />
+        </div>
       </main>
     </div>
   );
