@@ -3,6 +3,7 @@ import { Header } from './components/header/header';
 import { ArticleList } from './components/ArticleList/ArticleList';
 import { Search } from './components/Search/Search';
 import { AddArticleForm } from './components/AddArticleForm/AddArticleForm';
+import FeedbackForm from './components/FeedbackForm/FeedbackForm';
 import { articles as initialArticles } from './data/articles';
 
 export function App() {
@@ -30,55 +31,31 @@ export function App() {
 
   return (
     <div>
-      {/* Стили для CSS Grid (Задания 1, 2 и 4) */}
-      <style>{`
-        .lab2-layout {
-          display: grid;
-          grid-template-columns: 200px 1fr 200px;
-          grid-template-areas:
-            "header header header"
-            "main sidebar ."
-            "footer footer footer";
-          gap: 16px;
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 16px;
-        }
-
-        @media (max-width: 768px) {
-          .lab2-layout {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-              "header"
-              "main"
-              "sidebar"
-              "footer";
-          }
-        }
-      `}</style>
-
       <Header articlesCount={articles.length} />
 
-      <main className="lab2-layout">
-        <div style={{ gridArea: 'main' }}>
-          {/* Задание 3: Новый контент через children */}
-          <section style={{ marginBottom: '2rem', background: '#f5f5f5', padding: '1rem', borderRadius: '8px' }}>
-            <h2>Добро пожаловать в блог!</h2>
-            <p>Используйте поиск и фильтры ниже для навигации по статьям.</p>
-          </section>
+      <main style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <section style={{ marginBottom: '2rem', background: '#f8f9fa', padding: '1.5rem', borderRadius: '8px' }}>
+          <h2>Добро пожаловать в блог!</h2>
+          <p>Используйте поиск и фильтры ниже для навигации по статьям.</p>
+        </section>
 
-          <Search
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            selectedTag={selectedTag}
-            onTagChange={setSelectedTag}
-            tags={allTags}
-          />
+        <Search
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          selectedTag={selectedTag}
+          onTagChange={setSelectedTag}
+          tags={allTags}
+        />
 
-          <AddArticleForm onAddArticle={handleAddArticle} />
+        <AddArticleForm onAddArticle={handleAddArticle} />
 
-          <ArticleList articles={filteredArticles} />
-        </div>
+        <ArticleList articles={filteredArticles} />
+
+        {/* Лабораторная работа №3 */}
+        <section style={{ marginTop: '4rem' }}>
+          <h2 style={{ textAlign: 'center' }}>Обратная связь</h2>
+          <FeedbackForm />
+        </section>
       </main>
     </div>
   );
